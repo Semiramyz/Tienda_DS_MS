@@ -1,0 +1,37 @@
+<h2>📊 Contabilidad</h2>
+
+<h3>Resumen Diario</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Fecha</th><th>Total Compras</th><th>Total Ventas</th><th>Ganancia</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let r of resumen" [class.negative]="r.ganancia < 0">
+      <td>{{ r.fecha }}</td>
+      <td>Q{{ r.totalCompras | number:'1.2-2' }}</td>
+      <td>Q{{ r.totalVentas | number:'1.2-2' }}</td>
+      <td><strong>Q{{ r.ganancia | number:'1.2-2' }}</strong></td>
+    </tr>
+  </tbody>
+</table>
+<p *ngIf="resumen.length === 0">Sin datos de resumen.</p>
+
+<h3>Movimientos</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Tipo</th><th>Descripción</th><th>Monto</th><th>Fecha</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let m of movimientos" [class.compra]="m.tipo === 'COMPRA'" [class.venta]="m.tipo === 'VENTA'">
+      <td><span class="badge" [class.badge-compra]="m.tipo === 'COMPRA'" [class.badge-venta]="m.tipo === 'VENTA'">{{ m.tipo }}</span></td>
+      <td>{{ m.descripcion }}</td>
+      <td>Q{{ m.monto | number:'1.2-2' }}</td>
+      <td>{{ m.fecha | date:'short' }}</td>
+    </tr>
+  </tbody>
+</table>
+<p *ngIf="movimientos.length === 0">No hay movimientos registrados.</p>

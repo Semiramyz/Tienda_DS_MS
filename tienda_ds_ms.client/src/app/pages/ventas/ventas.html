@@ -1,0 +1,71 @@
+<h2>🛒 Ventas</h2>
+
+<div class="toolbar">
+  <button (click)="mostrarForm = !mostrarForm; resultado = null">+ Nueva Venta</button>
+</div>
+
+<!-- Resultado de venta exitosa -->
+<div class="result-card" *ngIf="resultado">
+  <h3>✅ Venta #{{ resultado.venta.id }} creada exitosamente</h3>
+  <p><strong>Cliente:</strong> {{ resultado.venta.nombreCliente }}</p>
+  <p><strong>Factura:</strong> {{ resultado.factura.numeroFactura }}</p>
+  <p><strong>Total:</strong> Q{{ resultado.venta.total | number:'1.2-2' }}</p>
+  <button (click)="resultado = null">Cerrar</button>
+</div>
+
+<!-- Formulario de venta -->
+<div class="form-card" *ngIf="mostrarForm">
+  <h3>Crear Venta</h3>
+
+  <div class="form-section">
+    <label>Cliente:</label>
+    <select [(ngModel)]="clienteId">
+      <option [value]="0" disabled>-- Seleccionar Cliente --</option>
+      <option *ngFor="let c of clientes" [value]="c.id">{{ c.nombre }} ({{ c.nit }})</option>
+    </select>
+  </div>
+
+  <div class="form-section">
+    <label>Agregar Producto:</label>
+    <div class="item-row">
+      <select [(ngModel)]="nuevoItem.productoId">
+        <option [value]="0" disabled>-- Producto --</option>
+        <option *ngFor="let p of productos" [value]="p.id">{{ p.nombre }} (Stock: {{ p.stock }}) - Q{{ p.precioVenta }}</option>
+      </select>
+      <input type="number" [(ngModel)]="nuevoItem.cantidad" min="1" placeholder="Cant." />
+      <button (click)="agregarItem()">Agregar</button>
+    </div>
+  </div>
+
+  <div *ngIf="items.length > 0">
+    <h4>Productos en la venta:</h4>
+    <ul>
+      <li *ngFor="let item of items; let i = index">
+        {{ getNombreProducto(item.productoId) }} x {{ item.cantidad }}
+        <button class="remove-btn" (click)="quitarItem(i)">✕</button>
+      </li>
+    </ul>
+  </div>
+
+  <p class="error" *ngIf="error">{{ error }}</p>
+  <button class="submit-btn" (click)="crearVenta()">Procesar Venta</button>
+</div>
+
+<!-- Historial -->
+<table>
+  <thead>
+    <tr>
+      <th>ID</th><th>Cliente</th><th>Fecha</th><th>Total</th><th>Estado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let v of ventas">
+      <td>{{ v.id }}</td>
+      <td>{{ v.nombreCliente || 'Cliente #' + v.clienteId }}</td>
+      <td>{{ v.fecha | date:'short' }}</td>
+      <td>Q{{ v.total | number:'1.2-2' }}</td>
+      <td>{{ v.estado }}</td>
+    </tr>
+  </tbody>
+</table>
+<p *ngIf="ventas.length === 0">No hay ventas registradas.</p>

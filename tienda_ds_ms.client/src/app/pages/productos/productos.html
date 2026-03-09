@@ -1,0 +1,40 @@
+<h2>📦 Productos / Inventario</h2>
+
+<div class="toolbar">
+  <button (click)="mostrarForm = !mostrarForm">+ Comprar a Proveedor</button>
+</div>
+
+<div class="form-card" *ngIf="mostrarForm">
+  <h3>Registrar Compra de Producto</h3>
+  <form (ngSubmit)="registrarCompra()">
+    <select [(ngModel)]="nuevo.proveedorId" name="proveedorId" required>
+      <option [value]="0" disabled>-- Seleccionar Proveedor --</option>
+      <option *ngFor="let p of proveedores" [value]="p.id">{{ p.nombreEmpresa }}</option>
+    </select>
+    <input placeholder="Nombre Producto" [(ngModel)]="nuevo.nombre" name="nombre" required />
+    <input placeholder="Descripción" [(ngModel)]="nuevo.descripcion" name="descripcion" />
+    <input type="number" placeholder="Precio Compra" [(ngModel)]="nuevo.precioCompra" name="precioCompra" required min="0" step="0.01" />
+    <input type="number" placeholder="Precio Venta" [(ngModel)]="nuevo.precioVenta" name="precioVenta" required min="0" step="0.01" />
+    <input type="number" placeholder="Cantidad" [(ngModel)]="nuevo.cantidad" name="cantidad" required min="1" />
+    <button type="submit">Registrar Compra</button>
+  </form>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th><th>Producto</th><th>P. Compra</th><th>P. Venta</th><th>Stock</th><th>Proveedor #</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let p of productos" [class.low-stock]="p.stock < 5">
+      <td>{{ p.id }}</td>
+      <td>{{ p.nombre }}</td>
+      <td>Q{{ p.precioCompra | number:'1.2-2' }}</td>
+      <td>Q{{ p.precioVenta | number:'1.2-2' }}</td>
+      <td>{{ p.stock }}</td>
+      <td>{{ p.proveedorId }}</td>
+    </tr>
+  </tbody>
+</table>
+<p *ngIf="productos.length === 0">No hay productos en inventario.</p>

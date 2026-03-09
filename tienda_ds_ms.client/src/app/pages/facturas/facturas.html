@@ -1,0 +1,22 @@
+<h2>🧾 Facturas</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th># Factura</th><th>Cliente</th><th>NIT</th><th>Fecha</th><th>Subtotal</th><th>IVA</th><th>Total</th><th>Estado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let f of facturas">
+      <td>{{ f.numeroFactura }}</td>
+      <td>{{ f.nombreCliente }}</td>
+      <td>{{ f.nitCliente }}</td>
+      <td>{{ f.fechaEmision | date:'short' }}</td>
+      <td>Q{{ f.subtotal | number:'1.2-2' }}</td>
+      <td>Q{{ f.impuesto | number:'1.2-2' }}</td>
+      <td><strong>Q{{ f.total | number:'1.2-2' }}</strong></td>
+      <td>{{ f.estado }}</td>
+    </tr>
+  </tbody>
+</table>
+<p *ngIf="facturas.length === 0">No hay facturas emitidas.</p>

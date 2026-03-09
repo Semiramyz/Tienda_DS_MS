@@ -1,0 +1,8 @@
+h3 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
+table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.1); margin-bottom: 1rem; }
+th { background: #34495e; color: white; padding: 0.6rem; text-align: left; }
+td { padding: 0.6rem; border-bottom: 1px solid #eee; }
+.badge { padding: 0.2rem 0.5rem; border-radius: 3px; font-size: 0.8rem; font-weight: 600; }
+.badge-compra { background: #f39c12; color: white; }
+.badge-venta { background: #27ae60; color: white; }
+.negative td { background: #ffe0e0; }

@@ -1,0 +1,36 @@
+<h2>👥 Clientes</h2>
+
+<div class="toolbar">
+  <input placeholder="Buscar por nombre o NIT..." [(ngModel)]="busqueda" (input)="buscar()" />
+  <button (click)="mostrarForm = !mostrarForm">+ Nuevo Cliente</button>
+</div>
+
+<div class="form-card" *ngIf="mostrarForm">
+  <h3>Registrar Cliente</h3>
+  <form (ngSubmit)="crear()">
+    <input placeholder="Nombre" [(ngModel)]="nuevo.nombre" name="nombre" required />
+    <input placeholder="NIT" [(ngModel)]="nuevo.nit" name="nit" required />
+    <input placeholder="Email (opcional)" [(ngModel)]="nuevo.email" name="email" />
+    <input placeholder="Teléfono (opcional)" [(ngModel)]="nuevo.telefono" name="telefono" />
+    <input placeholder="Dirección (opcional)" [(ngModel)]="nuevo.direccion" name="direccion" />
+    <button type="submit">Guardar</button>
+  </form>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th><th>Nombre</th><th>NIT</th><th>Email</th><th>Teléfono</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let c of clientes">
+      <td>{{ c.id }}</td>
+      <td>{{ c.nombre }}</td>
+      <td>{{ c.nit }}</td>
+      <td>{{ c.email || '-' }}</td>
+      <td>{{ c.telefono || '-' }}</td>
+    </tr>
+  </tbody>
+</table>
+<p *ngIf="clientes.length === 0">No hay clientes registrados.</p>
