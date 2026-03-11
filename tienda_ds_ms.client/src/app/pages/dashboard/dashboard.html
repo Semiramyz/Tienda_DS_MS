@@ -1,13 +1,30 @@
 <div class="dashboard">
   <nav class="sidebar">
-    <h3>🏪 Tienda DS</h3>
-    <a routerLink="/dashboard/clientes" routerLinkActive="active">👥 Clientes</a>
-    <a routerLink="/dashboard/proveedores" routerLinkActive="active">🏭 Proveedores</a>
-    <a routerLink="/dashboard/productos" routerLinkActive="active">📦 Productos</a>
-    <a routerLink="/dashboard/ventas" routerLinkActive="active">🛒 Ventas</a>
-    <a routerLink="/dashboard/facturas" routerLinkActive="active">🧾 Facturas</a>
-    <a routerLink="/dashboard/contabilidad" routerLinkActive="active">📊 Contabilidad</a>
-    <button class="logout-btn" (click)="logout()">🚪 Cerrar Sesión</button>
+    <div class="sidebar-brand">
+      <div class="brand-icon">DS</div>
+      <span>Tienda DS</span>
+    </div>
+    <div class="sidebar-nav">
+      <a routerLink="/dashboard/clientes" routerLinkActive="active">
+        <span class="nav-icon">👥</span> Clientes
+      </a>
+      <a routerLink="/dashboard/proveedores" routerLinkActive="active">
+        <span class="nav-icon">🏭</span> Proveedores
+      </a>
+      <a routerLink="/dashboard/productos" routerLinkActive="active">
+        <span class="nav-icon">📦</span> Productos
+      </a>
+      <a routerLink="/dashboard/ventas" routerLinkActive="active">
+        <span class="nav-icon">🛒</span> Ventas
+      </a>
+      <a routerLink="/dashboard/facturas" routerLinkActive="active">
+        <span class="nav-icon">🧾</span> Facturas
+      </a>
+      <a routerLink="/dashboard/contabilidad" routerLinkActive="active">
+        <span class="nav-icon">📊</span> Contabilidad
+      </a>
+    </div>
+    <button class="logout-btn" (click)="logout()">Cerrar Sesión</button>
   </nav>
   <main class="content">
     <router-outlet></router-outlet>

@@ -1,3 +1,7 @@
-table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
-th { background: #34495e; color: white; padding: 0.6rem; text-align: left; }
-td { padding: 0.6rem; border-bottom: 1px solid #eee; }
+h2 { font-size: 1.5rem; font-weight: 700; color: var(--navy); margin-bottom: 1.25rem; }
+
+table { width: 100%; border-collapse: collapse; background: var(--white); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid var(--gray-200); }
+th { background: var(--navy); color: var(--white); padding: 0.75rem 1rem; text-align: left; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+td { padding: 0.7rem 1rem; border-bottom: 1px solid var(--gray-100); font-size: 0.9rem; color: var(--gray-800); }
+tbody tr:hover { background: var(--gray-50); }
+p { color: var(--gray-600); font-size: 0.9rem; margin-top: 1rem; }

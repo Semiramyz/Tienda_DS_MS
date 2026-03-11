@@ -1,1 +1,42 @@
-/* You can add global styles to this file, and also import other style files */
+/* =============================================
+   ESTILOS GLOBALES — Paleta: Blanco · Azul Naval · Negro
+   ============================================= */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy: #0a1f3b;
+  --navy-light: #132d52;
+  --navy-mid: #1a3a68;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --black: #0b0b0b;
+  --white: #ffffff;
+  --gray-50: #f8fafc;
+  --gray-100: #f1f5f9;
+  --gray-200: #e2e8f0;
+  --gray-300: #cbd5e1;
+  --gray-600: #475569;
+  --gray-800: #1e293b;
+  --radius: 8px;
+  --shadow-sm: 0 1px 3px rgba(10, 31, 59, 0.08);
+  --shadow-md: 0 4px 12px rgba(10, 31, 59, 0.1);
+  --shadow-lg: 0 8px 24px rgba(10, 31, 59, 0.12);
+  --transition: all 0.2s ease;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--gray-50);
+  color: var(--black);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { text-decoration: none; color: inherit; }
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--gray-100); }
+::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--navy-light); }

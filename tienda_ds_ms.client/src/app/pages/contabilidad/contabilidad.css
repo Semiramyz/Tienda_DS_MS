@@ -1,8 +1,93 @@
-h3 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
-table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.1); margin-bottom: 1rem; }
-th { background: #34495e; color: white; padding: 0.6rem; text-align: left; }
-td { padding: 0.6rem; border-bottom: 1px solid #eee; }
-.badge { padding: 0.2rem 0.5rem; border-radius: 3px; font-size: 0.8rem; font-weight: 600; }
-.badge-compra { background: #f39c12; color: white; }
-.badge-venta { background: #27ae60; color: white; }
-.negative td { background: #ffe0e0; }
+h2 { font-size: 1.5rem; font-weight: 700; color: var(--navy); margin-bottom: 1.25rem; }
+h3 { font-size: 1.1rem; font-weight: 600; color: var(--navy); margin-top: 1.75rem; margin-bottom: 0.75rem; }
+
+table { width: 100%; border-collapse: collapse; background: var(--white); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid var(--gray-200); margin-bottom: 1rem; }
+th { background: var(--navy); color: var(--white); padding: 0.75rem 1rem; text-align: left; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+td { padding: 0.7rem 1rem; border-bottom: 1px solid var(--gray-100); font-size: 0.9rem; color: var(--gray-800); }
+tbody tr:hover { background: var(--gray-50); }
+
+.badge {
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.badge-compra { background: var(--navy-light); color: var(--white); }
+.badge-venta { background: var(--accent); color: var(--white); }
+.negative td { background: #fef2f2; }
+p { color: var(--gray-600); font-size: 0.9rem; margin-top: 1rem; }
+
+/* ==================== SECCIÓN GRÁFICAS ==================== */
+.charts-section {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid var(--gray-200);
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.chart-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-200);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chart-card h4 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 1rem;
+  text-align: center;
+  width: 100%;
+}
+
+.chart-card canvas {
+  display: block;
+  max-width: 100%;
+}
+
+.chart-legend {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--gray-800);
+}
+
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.dot-compra { background: var(--navy-light); }
+.dot-venta { background: var(--accent); }
+
+@media (max-width: 800px) {
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+}

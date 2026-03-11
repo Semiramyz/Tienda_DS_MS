@@ -35,3 +35,25 @@
   </tbody>
 </table>
 <p *ngIf="movimientos.length === 0">No hay movimientos registrados.</p>
+
+<!-- ========== SECCIÓN GRÁFICA ========== -->
+<div class="charts-section" *ngIf="resumen.length > 0 || movimientos.length > 0">
+  <h3>Vista Gráfica</h3>
+  <div class="charts-grid">
+
+    <div class="chart-card" *ngIf="resumen.length > 0">
+      <h4>Compras vs Ventas vs Ganancia</h4>
+      <canvas #barChart></canvas>
+    </div>
+
+    <div class="chart-card" *ngIf="movimientos.length > 0">
+      <h4>Distribución de Movimientos</h4>
+      <canvas #donutChart></canvas>
+      <div class="chart-legend">
+        <span class="legend-item"><span class="legend-dot dot-compra"></span> Compras: Q{{ totalCompras | number:'1.2-2' }}</span>
+        <span class="legend-item"><span class="legend-dot dot-venta"></span> Ventas: Q{{ totalVentas | number:'1.2-2' }}</span>
+      </div>
+    </div>
+
+  </div>
+</div>
