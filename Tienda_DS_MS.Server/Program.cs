@@ -97,7 +97,10 @@ app.MapControllers();
 
 app.MapFallbackToFile("/index.html");
 
-// Seed: crea el usuario administrador inicial
-await DbSeeder.SeedAsync(app.Services);
+// Seed solo en Development para evitar fallos en producción
+if (app.Environment.IsDevelopment())
+{
+    await DbSeeder.SeedAsync(app.Services);
+}
 
 app.Run();
