@@ -45,7 +45,20 @@ public class AuthService : IAuthService
     public async Task<TokenResponseDto?> LoginAsync(LoginDto dto)
     {
         var user = await _db.Usuarios.FirstOrDefaultAsync(u => u.Email == dto.Email && u.Activo);
-        if (user is null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash))
+        if (user is null)
+            return null;
+
+        var valid = false;
+        try
+        {
+            valid = BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash);
+        }
+        catch (BCrypt.Net.SaltParseException)
+        {
+            return null;
+        }
+
+        if (!valid)
             return null;
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
