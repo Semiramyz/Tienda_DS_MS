@@ -9,6 +9,15 @@ using Tienda_DS_MS.Server.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // =============================================
+// Cargar configuración según el ambiente
+// =============================================
+var environment = builder.Environment.EnvironmentName;
+if (environment == "Docker")
+{
+    builder.Configuration.AddJsonFile("appsettings.Docker.json", optional: true, reloadOnChange: true);
+}
+
+// =============================================
 // Bases de datos MySQL (una por dominio)
 // =============================================
 var serverVersion = new MySqlServerVersion(new Version(8, 0, 44));
@@ -72,6 +81,23 @@ builder.Services.AddScoped<IVentaService, VentaService>();
 builder.Services.AddScoped<IFacturaService, FacturaService>();
 builder.Services.AddScoped<IContabilidadService, ContabilidadService>();
 
+// =============================================
+// CORS Configuration
+// =============================================
+builder.Services.AddCors(options =>
+{
+    var corsOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() 
+        ?? new[] { "http://localhost:80", "http://localhost:4200", "http://tienda-web", "https://localhost" };
+
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins(corsOrigins)
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials();
+    });
+});
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -81,14 +107,22 @@ var app = builder.Build();
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("Docker"))
 {
     app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// =============================================
+// Middleware
+// =============================================
+app.UseCors("AllowFrontend");
+
+if (!app.Environment.IsProduction() && !app.Environment.IsEnvironment("Docker"))
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseAuthentication();
 app.UseAuthorization();
@@ -97,8 +131,8 @@ app.MapControllers();
 
 app.MapFallbackToFile("/index.html");
 
-// Seed solo en Development para evitar fallos en producción
-if (app.Environment.IsDevelopment())
+// Seed en Development y Docker
+if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("Docker"))
 {
     await DbSeeder.SeedAsync(app.Services);
 }

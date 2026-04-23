@@ -1,0 +1,82 @@
+version: '3.9'
+
+services:
+  # ==========================================
+  # Base de datos MySQL
+  # ==========================================
+  mysql-db:
+    image: mysql:8.0
+    container_name: tienda-ds-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-Mojang_24}
+      MYSQL_DATABASE: auth_db
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./init-databases.sql:/docker-entrypoint-initdb.d/init-databases.sql
+    networks:
+      - tienda-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ==========================================
+  # API .NET 8 (Backend)
+  # ==========================================
+  tienda-api:
+    build:
+      context: .
+      dockerfile: Tienda_DS_MS.Server/Dockerfile
+    container_name: tienda-ds-api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Docker
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__AuthDb: "Server=mysql-db;Port=3306;Database=auth_db;User=root;Password=${MYSQL_ROOT_PASSWORD:-Mojang_24};SslMode=None;AllowPublicKeyRetrieval=True;"
+      ConnectionStrings__ClientesDb: "Server=mysql-db;Port=3306;Database=clientes_db;User=root;Password=${MYSQL_ROOT_PASSWORD:-Mojang_24};SslMode=None;AllowPublicKeyRetrieval=True;"
+      ConnectionStrings__ProveedoresDb: "Server=mysql-db;Port=3306;Database=proveedores_db;User=root;Password=${MYSQL_ROOT_PASSWORD:-Mojang_24};SslMode=None;AllowPublicKeyRetrieval=True;"
+      ConnectionStrings__ProductosDb: "Server=mysql-db;Port=3306;Database=productos_db;User=root;Password=${MYSQL_ROOT_PASSWORD:-Mojang_24};SslMode=None;AllowPublicKeyRetrieval=True;"
+      ConnectionStrings__VentasDb: "Server=mysql-db;Port=3306;Database=ventas_db;User=root;Password=${MYSQL_ROOT_PASSWORD:-Mojang_24};SslMode=None;AllowPublicKeyRetrieval=True;"
+      ConnectionStrings__FacturasDb: "Server=mysql-db;Port=3306;Database=facturas_db;User=root;Password=${MYSQL_ROOT_PASSWORD:-Mojang_24};SslMode=None;AllowPublicKeyRetrieval=True;"
+      ConnectionStrings__ContabilidadDb: "Server=mysql-db;Port=3306;Database=contabilidad_db;User=root;Password=${MYSQL_ROOT_PASSWORD:-Mojang_24};SslMode=None;AllowPublicKeyRetrieval=True;"
+      Jwt__Key: ${JWT_KEY:-ClaveSuperSecretaParaProduccionDe256BitsAWS!!2025}
+      Jwt__Issuer: TiendaMS
+      Jwt__Audience: TiendaFrontend
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+    networks:
+      - tienda-network
+    restart: unless-stopped
+
+  # ==========================================
+  # Cliente Angular (Frontend)
+  # ==========================================
+  tienda-web:
+    build:
+      context: .
+      dockerfile: tienda_ds_ms.client/Dockerfile
+    container_name: tienda-ds-web
+    environment:
+      API_URL: http://tienda-api:8080
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - tienda-api
+    networks:
+      - tienda-network
+    restart: unless-stopped
+
+networks:
+  tienda-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
+    driver: local

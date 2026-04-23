@@ -1,0 +1,22 @@
+version: '3.9'
+
+# Configuración para desarrollo local
+# Usa: docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
+
+services:
+  mysql-db:
+    ports:
+      - "3306:3306"
+
+  tienda-api:
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      Logging__LogLevel__Default: Debug
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+
+  tienda-web:
+    ports:
+      - "80:80"
+      - "443:443"

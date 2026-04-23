@@ -1,0 +1,11 @@
+node_modules
+npm-debug.log
+dist
+.angular
+.git
+.gitignore
+README.md
+LICENSE
+*.md
+.env
+.env.local

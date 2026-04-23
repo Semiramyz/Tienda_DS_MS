@@ -1,0 +1,57 @@
+# Docker files
+Dockerfile
+.dockerignore
+docker-compose.override.yml
+
+# Docker Compose
+.docker
+.docker-compose
+
+# Environment files (NUNCA commitear archivos .env con credenciales)
+.env
+.env.local
+.env.docker.local
+.env.*.local
+!.env.example
+
+# Build artifacts
+bin/
+obj/
+dist/
+.angular/
+
+# Node modules
+node_modules/
+package-lock.json
+yarn.lock
+
+# IDE
+.vscode/
+.idea/
+.vs/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Database backups
+*.sql
+backups/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Runtime
+.classpath
+.project
+.settings
+.toolstarget
+*.dcproj.user

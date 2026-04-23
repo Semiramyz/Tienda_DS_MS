@@ -1,0 +1,30 @@
+version: '3.9'
+
+# Configuración para PRODUCCIÓN
+# Usa: docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+
+services:
+  mysql-db:
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - mysql-data-prod:/var/lib/mysql
+    # No exponer puerto en producción
+    ports: []
+
+  tienda-api:
+    restart: always
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      Logging__LogLevel__Default: Warning
+    # Scale a múltiples instancias
+    deploy:
+      replicas: 2
+
+  tienda-web:
+    restart: always
+
+volumes:
+  mysql-data-prod:
+    driver: local
