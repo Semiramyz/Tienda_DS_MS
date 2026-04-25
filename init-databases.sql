@@ -182,9 +182,9 @@ CREATE TABLE movimientos (
 CREATE TABLE resumen_diario (
   id int NOT NULL AUTO_INCREMENT,
   fecha date NOT NULL,
-  ingresos decimal(12,2) DEFAULT 0,
-  egresos decimal(12,2) DEFAULT 0,
-  saldo decimal(12,2) DEFAULT 0,
+  total_compras decimal(12,2) DEFAULT 0,
+  total_ventas decimal(12,2) DEFAULT 0,
+  ganancia decimal(12,2) DEFAULT 0,
   PRIMARY KEY (id),
   UNIQUE KEY idx_fecha (fecha)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
