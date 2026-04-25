@@ -1,0 +1,40 @@
+## SOLUCION RAPIDA - Errores 500 en GET/POST API
+
+### PROBLEMA
+GET/POST http://localhost/api/clientes retornaba 500 (Internal Server Error)
+Error: Unknown database 'clientes_db'
+
+### CAUSA
+El script SQL init-databases-full.sql solo creaba auth_db. Las otras 6 BDs no se inicializaban.
+
+### SOLUCION
+1. Crear script SQL limpio: init-databases-complete.sql
+   - 7 CREATE DATABASE explícitos
+   - Nombres de índices sin conflictos (prefijo idx_)
+   - Estructura SQL correcta
+
+2. Actualizar docker-compose.yml
+   - Usar init-databases.sql en lugar de init-databases-full.sql
+
+3. Reiniciar Docker
+   - docker-compose down -v
+   - docker-compose up -d
+
+### RESULTADO
+✅ Todas las 7 bases de datos creadas
+✅ GET /api/clientes retorna [] (correcto)
+✅ POST /api/clientes crea clientes exitosamente
+✅ API respondiendo sin errores 500
+
+### ARCHIVOS CAMBIADOS
+- init-databases-complete.sql (NUEVO)
+- init-databases.sql (ACTUALIZADO)
+- docker-compose.yml (ACTUALIZADO)
+
+### PRUEBAS EXITOSAS
+- Login: POST /api/auth/login ✅
+- Obtener: GET /api/clientes ✅
+- Crear: POST /api/clientes ✅
+- Frontend cargando: GET / ✅
+
+LISTO PARA USAR!
